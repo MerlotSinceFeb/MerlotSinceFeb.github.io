@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://merlotsincefeb.github.io">
-  <title>MerlotSinceFeb</title>
+  <title>剑指offer19 | MerlotSinceFeb</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <meta name="keywords" content="">
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="MerlotSinceFeb">
-<meta property="og:url" content="https://merlotsincefeb.github.io/page/3/index.html">
+  <meta name="description" content="剑指 Offer 19. 正则表达式匹配没有思路时会写出很多if判断条件，十分繁琐且容易漏情况 本题可用动态规划求解。 （boolean) dp[i] [j] &#x3D;true 的含义为 s的前i个字符可以和p的前j个字符匹配 初始化数组时 dp[0] [0] &#x3D; true 之后 首列（s存在，p为空时，无论如何无法匹配）都为false -&gt; dp[i] [0] &#x3D;false &#x2F;&#x2F; 由于java特">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指offer19">
+<meta property="og:url" content="https://merlotsincefeb.github.io/2021/05/17/%E5%89%91%E6%8C%87offer19/index.html">
 <meta property="og:site_name" content="MerlotSinceFeb">
+<meta property="og:description" content="剑指 Offer 19. 正则表达式匹配没有思路时会写出很多if判断条件，十分繁琐且容易漏情况 本题可用动态规划求解。 （boolean) dp[i] [j] &#x3D;true 的含义为 s的前i个字符可以和p的前j个字符匹配 初始化数组时 dp[0] [0] &#x3D; true 之后 首列（s存在，p为空时，无论如何无法匹配）都为false -&gt; dp[i] [0] &#x3D;false &#x2F;&#x2F; 由于java特">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-17T02:39:17.000Z">
+<meta property="article:modified_time" content="2021-05-17T02:57:20.830Z">
 <meta property="article:author" content="Merlot">
 <meta name="twitter:card" content="summary">
   
@@ -184,27 +185,22 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-480-滑动窗口中位数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-剑指offer19" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/02/03/480-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%AD%E4%BD%8D%E6%95%B0/">480.滑动窗口中位数</a>
-	
+    <h1 class="article-title" itemprop="name">
+      剑指offer19
     </h1>
   
 
 
   
   
-<a href="/2021/02/03/480-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%AD%E4%BD%8D%E6%95%B0/" class="archive-article-date">
-        <time datetime="2021-02-03T06:54:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-03</time>
+<a href="/2021/05/17/%E5%89%91%E6%8C%87offer19/" class="archive-article-date">
+        <time datetime="2021-05-17T02:39:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-17</time>
 </a>
 
   
@@ -213,212 +209,25 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>2021/2/3 的打卡题，涉及滑动窗口，虽然难度为Hard，也有比较暴力的方式</p>
-<h4 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h4><p>​        给你一个数组 nums，有一个长度为 k 的窗口从最左端滑动到最右端。窗口中有 k 个数，每次窗口向右移动 1 位。你的任务是找出每次窗口移动后得到的新窗口中元素的中位数，并输出由它们组成的数组。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>给出 nums = [1,3,-1,-3,5,3,6,7]，以及 k = 3。</p>
-<p>窗口位置                      中位数</p>
-<hr>
-<p>[1  3  -1] -3  5  3  6  7       1<br> 1 [3  -1  -3] 5  3  6  7      -1<br> 1  3 [-1  -3  5] 3  6  7      -1<br> 1  3  -1 [-3  5  3] 6  7       3<br> 1  3  -1  -3 [5  3  6] 7       5<br> 1  3  -1  -3  5 [3  6  7]      6<br> 因此，返回该滑动窗口的中位数数组 [1,-1,-1,3,5,6]</p>
-<h4 id="暴力方法"><a href="#暴力方法" class="headerlink" title="暴力方法"></a>暴力方法</h4><p>将排序和计算中位数的过程交给了py的 statistics.median()，不过用时很长</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> statistics</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">medianSlidingWindow</span>(<span class="params">self, nums, k</span>) :</span></span><br><span class="line">        re_list = []</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span> (<span class="built_in">len</span>(nums)-k+<span class="number">1</span>):</span><br><span class="line">            re_list.append(statistics.median(nums[i:i+k]))</span><br><span class="line">        <span class="keyword">return</span> re_list</span><br></pre></td></tr></table></figure>
-<h4 id="利用二分查找"><a href="#利用二分查找" class="headerlink" title="利用二分查找"></a>利用二分查找</h4><p>思路是维护滑动窗口内的数组，每次根据二分查找去除与增加因窗口滑动而变动的数组元素，并用re_list 保存每次滑动后产生的中位数。</p>
-<p>二分查找在python中有库 bisect可用，这里自己写了，中位数公式也替换成lambda函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">medianSlidingWindow</span>(<span class="params">self, nums, k</span>) :</span></span><br><span class="line">        re_list = []</span><br><span class="line">        a = []</span><br><span class="line">        median = <span class="keyword">lambda</span> a: (a[(<span class="built_in">len</span>(a)-<span class="number">1</span>)//<span class="number">2</span>] + a[<span class="built_in">len</span>(a)//<span class="number">2</span>]) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">            a.append(nums[j])</span><br><span class="line">        a = <span class="built_in">sorted</span>(a)</span><br><span class="line">        re_list.append(statistics.median(a))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)-k):</span><br><span class="line">            a.pop(self.bio_search(a,nums[i]))</span><br><span class="line">            a.insert(self.bio_search(a,nums[i+k]),nums[i+k])</span><br><span class="line">            re_list.append(median(a))</span><br><span class="line">        <span class="keyword">return</span> re_list</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bio_search</span>(<span class="params">self,arr,num</span>):</span></span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right =<span class="built_in">len</span>(arr)-<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(left&lt;=right):</span><br><span class="line">            mid = <span class="built_in">int</span>((left +right)/<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">if</span> arr[mid]&gt; num:</span><br><span class="line">                right = mid -<span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> arr[mid]&lt; num:</span><br><span class="line">                left = mid+<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> mid</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Sliding Window</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/LeetCode题解//" class="article-tag-list-link color1">LeetCode题解</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/02/03/480-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%AD%E4%BD%8D%E6%95%B0/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-paper" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/02/02/paper/">paper</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/02/02/paper/" class="archive-article-date">
-        <time datetime="2021-02-02T11:33:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-02</time>
-</a>
-
-  
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">样例</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/个人博客//" class="article-tag-list-link color5">个人博客</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/02/02/paper/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/01/30/hello-world/">Hello World</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/01/30/hello-world/" class="archive-article-date">
-        <time datetime="2021-01-30T02:42:07.297Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
-</a>
-
-  
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <h4 id="剑指-Offer-19-正则表达式匹配"><a href="#剑指-Offer-19-正则表达式匹配" class="headerlink" title="剑指 Offer 19. 正则表达式匹配"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zheng-ze-biao-da-shi-pi-pei-lcof/">剑指 Offer 19. 正则表达式匹配</a></h4><p>没有思路时会写出很多if判断条件，十分繁琐且容易漏情况</p>
+<p>本题可用动态规划求解。</p>
+<p>（boolean) dp[i] [j] =true 的含义为 s的前i个字符可以和p的前j个字符匹配</p>
+<p>初始化数组时</p>
+<p>dp[0] [0] = true</p>
+<p>之后 首列（s存在，p为空时，无论如何无法匹配）都为false -&gt; dp[i] [0] =false</p>
+<p>// 由于java特性，boolean类型数组初始值为false，可不做操作</p>
+<p>首列特殊（s为空，p存在时，需要‘*’都在偶数位，保证所有p的字符都可重复匹配且不出现）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>;j&lt;p.length();j+=<span class="number">2</span>)&#123;</span><br><span class="line">dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">2</span>] &amp;&amp; p.charAt(j-<span class="number">1</span>)==<span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后 i，j都从1开始遍历即可</p>
+<p>情况</p>
+<p>一、p.charAt(j-1)==’<em>‘ p的第j个字符是‘\</em>’</p>
+<p>i. dp[i] [j-2]==true -&gt;dp[i] [j]  如果前I个字符和 前j-2模式匹配，且第j为*，则让j-1位的字符出现0次，即匹配</p>
+<p>ii. dp[i] [j-1] &amp;&amp;s.charAt(i-1) ==p.charAt(j-2) -&gt; dp[i] [j] 如果前I个字符和 前j-1模式匹配且 i-1位置=j-1位置， 且第j为*,则让 i位重复一次 i-1即可匹配。</p>
+<p>iii.  dp[i-1] [j] &amp;&amp; p.charAt(j-2)==’.’  -&gt; dp[i] [j] 前i-1和j匹配，且p的j-1位置为. 即出现了”.*”的组合，则匹配</p>
+<p>二 、p.charAt(j-1)！=’<em>‘ p的第j个字符不是是‘\</em>’</p>
+<p>i.   dp[i-1] [j-1] &amp;&amp;s.charAt(i-1)==p.charAt(j-1)) -&gt;  dp[i] [j]  前i-1和j-1匹配且 第i和第j的字符匹配               </p>
+<p>ii. dp[i-1] [j-1] &amp;&amp;s ‘.’==p.charAt(j-1)) -&gt;  dp[i] [j]  前i-1和j-1匹配且第j字符为 ‘.’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span><span class="params">(String s, String p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span>[][] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[s.length()+<span class="number">1</span>][p.length()+<span class="number">1</span>];</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;dp.length;i++)</span><br><span class="line">        dp[i][<span class="number">0</span>]=<span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;dp[<span class="number">0</span>].length;i++)</span><br><span class="line">        dp[<span class="number">0</span>][i] = dp[<span class="number">0</span>][i-<span class="number">2</span>] &amp;&amp; p.charAt(i-<span class="number">1</span>)==<span class="string">&#x27;*&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;dp.length;i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;dp[<span class="number">0</span>].length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(p.charAt(j-<span class="number">1</span>)==<span class="string">&#x27;*&#x27;</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (dp[i][j-<span class="number">2</span>])</span><br><span class="line">                    dp[i][j]=<span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(dp[i-<span class="number">1</span>][j] &amp;&amp; s.charAt(i-<span class="number">1</span>)==p.charAt(j-<span class="number">2</span>))</span><br><span class="line">                    dp[i][j]=<span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(dp[i-<span class="number">1</span>][j] &amp;&amp; p.charAt(j-<span class="number">2</span>)==<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">                    dp[i][j]=<span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(dp[i-<span class="number">1</span>][j-<span class="number">1</span>] &amp;&amp;s.charAt(i-<span class="number">1</span>)==p.charAt(j-<span class="number">1</span>))</span><br><span class="line">                    dp[i][j]=<span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(dp[i-<span class="number">1</span>][j-<span class="number">1</span>] &amp;&amp; p.charAt(j-<span class="number">1</span>)==<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">                    dp[i][j]=<span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[s.length()][p.length()];</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
 
     
 
@@ -433,16 +242,76 @@
     
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/01/30/hello-world/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://merlotsincefeb.github.io/2021/05/17/%E5%89%91%E6%8C%87offer19/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2021/05/17/%E5%89%91%E6%8C%87offer17/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">剑指offer17</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -457,18 +326,33 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%91%E6%8C%87-Offer-19-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="toc-number">1.</span> <span class="toc-text">剑指 Offer 19. 正则表达式匹配</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
 
 
 
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
-  
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -496,8 +380,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
