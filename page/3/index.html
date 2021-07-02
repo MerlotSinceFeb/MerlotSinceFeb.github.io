@@ -187,6 +187,112 @@
             
 
   
+    <article id="post-424-替换后的最长重复字符" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/02/03/424-%E6%9B%BF%E6%8D%A2%E5%90%8E%E7%9A%84%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6/">424.替换后的最长重复字符</a>
+	
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/02/03/424-%E6%9B%BF%E6%8D%A2%E5%90%8E%E7%9A%84%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6/" class="archive-article-date">
+        <time datetime="2021-02-03T07:12:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-03</time>
+</a>
+
+  
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>2021/2/2 打卡题 涉及滑动窗口</p>
+<h4 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h4><p>给你一个仅由大写英文字母组成的字符串，你可以将任意位置上的字符替换成另外的字符，总共可最多替换 k 次。在执行上述操作后，找到包含重复字母的最长子串的长度。</p>
+<p>注意：字符串长度 和 k 不会超过 10^4。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>输入：s = “AABABBA”, k = 1<br>输出：4<br>解释：<br>将中间的一个’A’替换为’B’,字符串变为 “AABBBBA”。<br>子串 “BBBB” 有最长重复字母, 答案为 4。</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>利用哈希表维护记录窗口内出现字符的频数，当窗口内最高频数字符 max_freq 和滑动窗口长度length 与k满足</p>
+<p>max_freq + k &gt;= length 时 ，证明K可将窗口内所有字符替换成最高频字符。此时向右扩大滑动窗口 ，继续统计词频与判断</p>
+<p>当 max_freq + k &lt; length 时，窗口向右滑动但不减小（不影响先前的最优解）</p>
+<p>（滑动窗口利用双指针维护） </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">characterReplacement</span>(<span class="params">self, s, k</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line">        max_answer,right,max_char = <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">        chardict = defaultdict(<span class="built_in">int</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span> (<span class="built_in">len</span>(s)):</span><br><span class="line">            right_char = s[i]</span><br><span class="line">            chardict[right_char]+=<span class="number">1</span></span><br><span class="line">            max_char = <span class="built_in">max</span>(chardict[right_char],max_char)</span><br><span class="line">            <span class="keyword">if</span>(i -right+<span class="number">1</span>-max_char)&gt;k:</span><br><span class="line">                left_char = s[right]</span><br><span class="line">                right+=<span class="number">1</span></span><br><span class="line">                chardict[left_char]-=<span class="number">1</span></span><br><span class="line">            max_answer=<span class="built_in">max</span>(max_answer,i-right+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> max_answer</span><br><span class="line"></span><br><span class="line">s =Solution()</span><br><span class="line">print(s.characterReplacement(<span class="string">&#x27;ABBB&#x27;</span>,<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">双指针</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Sliding Window</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/LeetCode题解//" class="article-tag-list-link color1">LeetCode题解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/02/03/424-%E6%9B%BF%E6%8D%A2%E5%90%8E%E7%9A%84%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-480-滑动窗口中位数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
